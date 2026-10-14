@@ -3,9 +3,112 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./js/views/dashboard.js"></script>
+    <noscript>
+      <p>Tu navegador no soporta JavaScript.</p>
+    </noscript>
     <title>Quiosmart - Inicio</title>
   </head>
   <body>
+    <header>
+      <h1>Quiosmart - Inicio</h1>
+      <p>Gestión sencilla de ventas, inventario y pedidos de un quiosco.</p>
+    </header>
+    <aside>
+      <nav aria-label="Menú principal">
+        <h2 class="menu__titulo">Menú</h2>
+        <a href="#dashboard" aria-current="page">Panel principal</a>
+        <a href="sales.html">Ventas</a>
+        <a href="stock.html">Inventario</a>
+        <a href="orders.html">Pedidos</a>
+        <a href="suppliers.html">Proveedores</a>
+        <a href="customers.html">Clientes</a>
+      </nav>
+    </aside>
+    <main>
+      <section id="dashboard" class="dashboard">
+        <h2 class="dashboard__titulo">Panel principal</h2>
+        <p class="dashboard__descripcion">
+          Vista general de la actividad del quiosco: ventas, gastos y pedidos
+          pendientes.
+        </p>
 
+        <section class="resumen" aria-labelledby="titulo-resumen">
+          <h3 class="seccion__titulo" id="titulo-resumen">Resumen</h3>
+
+          <article class="tarjeta tarjeta--destacada">
+            <h4 class="tarjeta__titulo">Ventas de hoy</h4>
+            <p class="tarjeta__valor">235,54 €</p>
+          </article>
+
+          <article class="tarjeta">
+            <h4 class="tarjeta__titulo">Ventas mes anterior</h4>
+            <p class="tarjeta__valor">7.050,13 €</p>
+          </article>
+
+          <article class="tarjeta">
+            <h4 class="tarjeta__titulo">Gastos hoy</h4>
+            <p class="tarjeta__valor">30,00 €</p>
+          </article>
+
+          <article class="tarjeta">
+            <h4 class="tarjeta__titulo">Gastos mes anterior</h4>
+            <p class="tarjeta__valor">2.150,00 €</p>
+          </article>
+
+          <article class="tarjeta">
+            <h4 class="tarjeta__titulo">Productos con stock bajo</h4>
+            <p class="tarjeta__valor">7</p>
+          </article>
+        </section>
+
+        <section class="panel" aria-labelledby="titulo-pedidos">
+          <h3 class="seccion__titulo" id="titulo-pedidos">
+            Próximos pedidos de proveedores
+          </h3>
+
+          <ol class="lista">
+            <li class="lista__item">
+              <span class="lista__texto">
+                <strong class="lista__titulo">Castelló Martínez S.L.</strong>
+                <span class="lista__detalle">
+                  Bebidas - entrega el
+                  <time datetime="2026-10-14">14/10/2026</time>
+                </span>
+              </span>
+              <span class="lista__estado lista__estado--urgente"
+                >Llega mañana</span
+              >
+            </li>
+
+            <li class="lista__item">
+              <span class="lista__texto">
+                <strong class="lista__titulo">SugarLand S.L.U.</strong>
+                <span class="lista__detalle">
+                  Golosinas y chicles - entrega el
+                  <time datetime="2026-10-15">15/10/2026</time>
+                </span>
+              </span>
+              <span class="lista__estado">En camino</span>
+            </li>
+
+            <li class="lista__item">
+              <span class="lista__texto">
+                <strong class="lista__titulo">Panini España</strong>
+                <span class="lista__detalle">
+                  Cromos, álbumes y colecciones - entrega el
+                  <time datetime="2026-10-20">20/10/2026</time>
+                </span>
+              </span>
+              <span class="lista__estado">Pendiente</span>
+            </li>
+          </ol>
+        </section>
+      </section>
+    </main>
+    <footer>
+      <p>QuioSmart · Versión 1.0</p>
+    </footer>
   </body>
 </html>
