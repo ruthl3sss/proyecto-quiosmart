@@ -1,0 +1,408 @@
+/* ---------- 1. Base visual: variables, tipografía, espacios, box-sizing ---------- */
+:root {
+  /* Colores (los que se repiten van como variables) */
+  --verde-oscuro: #14532D;
+  --verde: #1F7A4D;
+  --verde-claro: #E6F4EC;
+  --verde-borde: #BFE3CF;
+  --fondo: #F3FAF6;
+  --blanco: #FFFFFF;
+  --texto: #0F2A1C;
+  --texto-suave: #4E6E5B;
+
+  /* Tipografía */
+  --fuente: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+
+  /* Espacios y formas */
+  --espacio-s: 12px;
+  --espacio: 24px;
+  --espacio-l: 32px;
+  --radio-boton: 10px;
+  --radio-tarjeta: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--fuente);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--texto);
+  background: var(--fondo);
+  overflow-wrap: anywhere; /* evita que un texto largo provoque scroll horizontal */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- 2. Estructura de la página con CSS Grid ---------- */
+/* Cabecera arriba, menú a la izquierda, contenido a la derecha y pie abajo */
+body {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "cabecera cabecera"
+    "menu     contenido"
+    "pie      pie";
+}
+
+body > header {
+  grid-area: cabecera;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 14px var(--espacio);
+  text-align: center;
+  background: var(--verde-oscuro);
+  color: var(--blanco);
+}
+
+body > header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+body > header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--verde-borde);
+}
+
+body > aside {
+  grid-area: menu;
+  padding: 20px 16px;
+  background: var(--blanco);
+  border-right: 1px solid var(--verde-borde);
+}
+
+aside nav {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu__titulo {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--texto-suave);
+}
+
+body > main {
+  grid-area: contenido;
+  min-width: 0; /* permite que el contenido se encoja dentro del grid */
+  padding: var(--espacio);
+}
+
+.dashboard {
+  display: grid;
+  gap: var(--espacio-l);
+}
+
+.dashboard__titulo {
+  margin: 0 0 -16px; /* acerca el título a su descripción dentro del grid */
+  font-size: 1.6rem;
+  color: var(--verde-oscuro);
+}
+
+.dashboard__descripcion {
+  margin: 0 0 8px;
+  color: var(--texto-suave);
+}
+
+body > footer {
+  grid-area: pie;
+  padding: var(--espacio-s) var(--espacio);
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--blanco);
+  background: var(--verde-oscuro);
+}
+
+body > footer p {
+  margin: 0;
+}
+
+/* ---------- 3. Enlaces del menú: vista actual y foco de teclado ---------- */
+aside nav a {
+  display: block;
+  padding: 14px 10px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--verde-oscuro);
+  background: var(--verde-claro);
+  border-radius: var(--radio-boton);
+  transition: background 0.15s;
+}
+
+aside nav a:hover {
+  background: var(--verde-borde);
+}
+
+/* Vista actual: se marca con aria-current="page" */
+aside nav a[aria-current="page"] {
+  background: var(--verde);
+  color: var(--blanco);
+  font-weight: bold;
+}
+
+/* Foco visible al navegar con el teclado (Tab) */
+a:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--verde-oscuro);
+  outline-offset: 3px;
+}
+
+/* ---------- 4. Títulos de sección ---------- */
+.seccion__titulo {
+  margin: 0 0 var(--espacio-s);
+  font-size: 1.25rem;
+  color: var(--verde-oscuro);
+}
+
+/* ---------- 5. Tarjetas de resumen (Grid, una ocupa más espacio) ---------- */
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--espacio);
+}
+
+/* El título "Resumen" ocupa toda la fila */
+.resumen > .seccion__titulo {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--espacio-s);
+  min-height: 150px;
+  padding: 28px 24px 28px 32px;
+  background: var(--blanco);
+  border: 1.5px solid var(--verde-borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+/* Barra verde de la izquierda */
+.tarjeta::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  width: 6px;
+  border-radius: 3px;
+  background: var(--verde);
+}
+
+/* La tarjeta destacada ocupa dos columnas en ventana ancha */
+.tarjeta--destacada {
+  grid-column: span 2;
+  background: var(--verde-claro);
+}
+
+.tarjeta__titulo {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+  color: var(--texto-suave);
+}
+
+.tarjeta__valor {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  color: var(--verde-oscuro);
+}
+
+.tarjeta--destacada .tarjeta__valor {
+  font-size: 2.6rem;
+}
+
+/* ---------- 6. Lista ordenada de pedidos próximos ---------- */
+.panel {
+  padding: var(--espacio);
+  background: var(--blanco);
+  border: 1.5px solid var(--verde-borde);
+  border-radius: var(--radio-tarjeta);
+}
+
+.lista {
+  display: grid;
+  gap: var(--espacio-s);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: pedido;
+}
+
+.lista__item {
+  counter-increment: pedido;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: var(--verde-claro);
+  border-left: 6px solid var(--verde);
+  border-radius: var(--radio-boton);
+}
+
+/* Número del orden dentro de un círculo */
+.lista__item::before {
+  content: counter(pedido);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-weight: bold;
+  color: var(--blanco);
+  background: var(--verde);
+  border-radius: 50%;
+}
+
+.lista__texto {
+  display: grid;
+  gap: 2px;
+}
+
+.lista__titulo {
+  font-weight: bold;
+}
+
+.lista__detalle {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.lista__estado {
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  color: var(--verde-oscuro);
+  background: var(--blanco);
+  border: 1px solid var(--verde-borde);
+  border-radius: 999px;
+}
+
+.lista__estado--urgente {
+  color: var(--blanco);
+  background: var(--verde-oscuro);
+  border-color: var(--verde-oscuro);
+}
+
+/* ---------- 7. Botones reutilizables ---------- */
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  font: inherit;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid var(--verde);
+  border-radius: var(--radio-boton);
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn--primario {
+  color: var(--blanco);
+  background: var(--verde);
+}
+
+.btn--primario:hover {
+  background: var(--verde-oscuro);
+  border-color: var(--verde-oscuro);
+}
+
+.btn--secundario {
+  color: var(--verde);
+  background: var(--blanco);
+}
+
+.btn--secundario:hover {
+  background: var(--verde-claro);
+}
+
+/* ---------- 8. Ventana estrecha (móvil / tablet pequeña) ---------- */
+/* Va al final para que sobrescriba las reglas anteriores */
+@media (max-width: 700px) {
+  body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-areas:
+      "cabecera"
+      "menu"
+      "contenido"
+      "pie";
+  }
+
+  body > header {
+    padding: 14px var(--espacio-s);
+  }
+
+  body > header h1 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  /* El menú pasa de columna lateral a filas de botones bajo la cabecera */
+  body > aside {
+    padding: var(--espacio-s);
+    border-right: none;
+    border-bottom: 1px solid var(--verde-borde);
+  }
+
+  aside nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .menu__titulo {
+    flex: 1 1 100%;
+  }
+
+  aside nav a {
+    flex: 1 1 120px;
+  }
+
+  body > main {
+    padding: var(--espacio-s);
+  }
+
+  /* Tarjetas en una sola columna */
+  .resumen {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tarjeta--destacada {
+    grid-column: auto;
+  }
+
+  /* El estado de cada pedido baja debajo del texto */
+  .lista__item {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .lista__estado {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
